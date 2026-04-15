@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 
 from game import apply_move, computer_move, new_game
@@ -10,7 +12,7 @@ SESSION_MODE_KEY = "tic_tac_toe_mode"
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "dev-tic-tac-toe-secret"
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "change-me-before-deploy")
 
     def load_game() -> dict | None:
         mode = session.get(SESSION_MODE_KEY)
@@ -88,4 +90,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

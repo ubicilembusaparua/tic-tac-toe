@@ -31,11 +31,11 @@
       {% if game.winner %}
         <p class="result-label">Winner</p>
         <h2 class="result-banner">Player {{ game.winner }} wins</h2>
-        <p class="result-copy">The game is complete. The winning line is highlighted on the board.</p>
+        <p class="result-copy">Winning line highlighted.</p>
       {% elif game.draw %}
         <p class="result-label">Game over</p>
         <h2 class="result-banner">It’s a draw</h2>
-        <p class="result-copy">No one can move. Start a new round to play again.</p>
+        <p class="result-copy">No winner this round.</p>
       {% else %}
         <p class="result-label">Current turn</p>
         <h2 class="result-banner">Player {{ game.current_player }}</h2>
