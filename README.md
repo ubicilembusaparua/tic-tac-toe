@@ -22,7 +22,7 @@ A Flask-based tic-tac-toe web game with two play modes:
 Install dependencies:
 
 ```bash
-C:/Users/ASUS/AppData/Local/Programs/Python/Python313/python.exe -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Run
@@ -30,7 +30,7 @@ C:/Users/ASUS/AppData/Local/Programs/Python/Python313/python.exe -m pip install 
 Start the app with:
 
 ```bash
-C:/Users/ASUS/AppData/Local/Programs/Python/Python313/python.exe app.py
+python app.py
 ```
 
 Or run it with Flask:
@@ -46,7 +46,7 @@ flask run
 Run the test suite with:
 
 ```bash
-C:/Users/ASUS/AppData/Local/Programs/Python/Python313/python.exe -m unittest discover -s tests
+python -m unittest discover -s tests
 ```
 
 ## Notes
