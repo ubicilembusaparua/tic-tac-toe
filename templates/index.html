@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Mode | Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Python Flask game</p>
+  <h1>Tic-Tac-Toe</h1>
+  <p class="lede">Choose a mode, claim a line, and keep the match moving with a clean, animated board.</p>
+
+  <div class="mode-grid">
+    <form method="post" action="{{ url_for('choose_mode') }}" class="mode-card">
+      <input type="hidden" name="mode" value="multiplayer">
+      <h2>Multiplayer</h2>
+      <p>Two players share one device and alternate turns.</p>
+      <button type="submit">Play multiplayer</button>
+    </form>
+
+    <form method="post" action="{{ url_for('choose_mode') }}" class="mode-card">
+      <input type="hidden" name="mode" value="computer">
+      <h2>Computer</h2>
+      <p>Play against a simple computer opponent.</p>
+      <button type="submit">Play computer</button>
+    </form>
+  </div>
+
+  <p class="hero-note">Fast turns, clear feedback, and a highlighted winning line when the match ends.</p>
+</section>
+{% endblock %}

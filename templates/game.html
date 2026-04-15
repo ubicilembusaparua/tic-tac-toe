@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Game | Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<section class="game-layout">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">{{ 'Computer mode' if mode == 'computer' else 'Multiplayer mode' }}</p>
+      <h1>Tic-Tac-Toe</h1>
+      <p class="status">{{ game.message }}</p>
+    </div>
+
+    <form method="post" action="{{ url_for('reset_game') }}">
+      <button type="submit" class="secondary">Restart</button>
+    </form>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+        {% for category, message in messages %}
+          <p class="flash {{ category }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="match-grid">
+    <aside class="status-panel {{ 'finished' if game.winner or game.draw else 'active' }}">
+      {% if game.winner %}
+        <p class="result-label">Winner</p>
+        <h2 class="result-banner">Player {{ game.winner }} wins</h2>
+        <p class="result-copy">The game is complete. The winning line is highlighted on the board.</p>
+      {% elif game.draw %}
+        <p class="result-label">Game over</p>
+        <h2 class="result-banner">It’s a draw</h2>
+        <p class="result-copy">No one can move. Start a new round to play again.</p>
+      {% else %}
+        <p class="result-label">Current turn</p>
+        <h2 class="result-banner">Player {{ game.current_player }}</h2>
+        <p class="result-copy">{{ game.message }}</p>
+      {% endif %}
+
+      <div class="status-pills" aria-label="Match details">
+        <span class="pill">{{ 'Computer' if mode == 'computer' else 'Multiplayer' }}</span>
+        <span class="pill">{{ 'Finished' if game.winner or game.draw else 'In progress' }}</span>
+      </div>
+    </aside>
+
+    <div class="board-shell">
+      <div
+        class="board"
+        role="grid"
+        aria-label="Tic-tac-toe board"
+        data-finished="{{ 'true' if game.winner or game.draw else 'false' }}"
+        data-winning-line="{{ game.winner_line | default([], true) | join(',') }}"
+      >
+        {% for cell in game.board %}
+          <form
+            method="post"
+            action="{{ url_for('make_move') }}"
+            class="square-form"
+            role="gridcell"
+          >
+            <input type="hidden" name="square" value="{{ loop.index0 }}">
+            <button
+              type="submit"
+              class="square{% if game.winner_line and loop.index0 in game.winner_line %} is-winning{% endif %}"
+              data-index="{{ loop.index0 }}"
+              {% if cell or game.winner or game.draw %}disabled{% endif %}
+            >
+              {{ cell }}
+            </button>
+          </form>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <footer class="game-footer">
+    <a href="{{ url_for('choose_mode') }}">Change mode</a>
+  </footer>
+</section>
+<script src="{{ url_for('static', filename='game.js') }}"></script>
+{% endblock %}
